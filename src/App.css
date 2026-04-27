@@ -224,6 +224,18 @@ body {
 .btn-primary:hover { background: var(--accent-dark); }
 .btn-primary:disabled { background: var(--border); color: var(--text-secondary); cursor: not-allowed; }
 
+.btn-skip-dev {
+  display: block;
+  margin: 12px auto 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: #bbb;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .btn-secondary {
   display: inline-block;
   background: transparent;

@@ -118,7 +118,7 @@ function ProgressBar({ current, total }) {
   );
 }
 
-function WelcomeScreen({ onStart }) {
+function WelcomeScreen({ onStart, onSkip }) {
   return (
     <div className="card welcome-card">
       <div className="welcome-emoji">🚀</div>
@@ -148,6 +148,9 @@ function WelcomeScreen({ onStart }) {
       </div>
       <button className="btn-primary" onClick={onStart}>
         Let's go →
+      </button>
+      <button className="btn-skip-dev" onClick={onSkip}>
+        [TEST] Skip to score →
       </button>
     </div>
   );
@@ -695,7 +698,16 @@ export default function App() {
   if (screen === "register")
     return <RegisterScreen onSubmit={(u) => { setUser(u); setScreen("welcome"); }} />;
   if (screen === "welcome")
-    return <WelcomeScreen onStart={() => setScreen("quiz")} />;
+    return <WelcomeScreen onStart={() => setScreen("quiz")} onSkip={() => {
+      const mockResults = questions.map((q) => ({
+        questionId: q.id, section: q.section, questionText: q.question,
+        correctAnswers: q.correct || null, firstAttempt: "correct",
+        tookRetry: false, reflectionScore: "strong", reflectionText: null,
+      }));
+      setResults(mockResults);
+      setScreen("score");
+      saveResults(user, mockResults).then(() => setSaved(true));
+    }} />;
   if (screen === "score")
     return <ScoreScreen results={results} user={user} saved={saved} onRestart={restart} />;
 
