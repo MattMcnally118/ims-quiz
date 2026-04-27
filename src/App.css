@@ -296,6 +296,49 @@ body {
   margin-bottom: 28px;
 }
 
+/* ── Register form ── */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.register-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color 0.15s;
+}
+.register-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.register-error {
+  font-size: 0.88rem;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* ── Score user / saved ── */
+.score-user {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.saved-indicator {
+  color: #16a34a;
+  font-weight: 600;
+}
+
 /* ── Retry button ── */
 .action-row {
   display: flex;

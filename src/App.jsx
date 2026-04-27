@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { questions } from "./quizData";
+import { supabase } from "./supabase";
 import "./App.css";
 
 const SECTIONS = [...new Set(questions.map((q) => q.section))];
@@ -36,6 +37,74 @@ function scoreReflection(text, keywords) {
   if (matches >= 3) return "strong";
   if (matches >= 1) return "medium";
   return "weak";
+}
+
+async function saveResults(user, results) {
+  if (!supabase || !user) return;
+  const scored = results.filter((r) => r.firstAttempt !== "reflection");
+  const correctCount = scored.filter((r) => r.firstAttempt === "correct").length;
+  const partialCount = scored.filter((r) => r.firstAttempt === "partial").length;
+  const incorrectCount = scored.filter((r) => r.firstAttempt === "incorrect").length;
+  const retriedCount = scored.filter((r) => r.tookRetry).length;
+  const pct =
+    scored.length > 0
+      ? Math.round(((correctCount + partialCount * 0.5) / scored.length) * 100)
+      : 0;
+  const { error } = await supabase.from("quiz_attempts").insert({
+    name: user.name,
+    email: user.email,
+    score_pct: pct,
+    correct_count: correctCount,
+    partial_count: partialCount,
+    incorrect_count: incorrectCount,
+    retried_count: retriedCount,
+    results,
+  });
+  if (error) console.error("Failed to save results:", error);
+}
+
+function RegisterScreen({ onSubmit }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name.trim()) { setError("Please enter your name."); return; }
+    if (!email.trim() || !email.includes("@")) { setError("Please enter a valid email address."); return; }
+    onSubmit({ name: name.trim(), email: email.trim() });
+  };
+
+  return (
+    <div className="card welcome-card">
+      <div className="welcome-emoji">👋</div>
+      <h1>Before we begin</h1>
+      <p className="welcome-subtitle">
+        Enter your details so your results can be tracked and your coach can follow up.
+      </p>
+      <form onSubmit={handleSubmit} className="register-form">
+        <input
+          type="text"
+          placeholder="Your full name"
+          value={name}
+          onChange={(e) => { setName(e.target.value); setError(""); }}
+          className="register-input"
+          autoFocus
+        />
+        <input
+          type="email"
+          placeholder="Your email address"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setError(""); }}
+          className="register-input"
+        />
+        {error && <p className="register-error">{error}</p>}
+        <button type="submit" className="btn-primary">
+          Continue →
+        </button>
+      </form>
+    </div>
+  );
 }
 
 function ProgressBar({ current, total }) {
@@ -400,6 +469,7 @@ function ReflectionQuestion({ question, onSubmit }) {
                 firstAttempt: "reflection",
                 tookRetry: false,
                 reflectionScore: score,
+                reflectionText: text,
               })
             }
           >
@@ -411,7 +481,7 @@ function ReflectionQuestion({ question, onSubmit }) {
   );
 }
 
-function ScoreScreen({ results, onRestart }) {
+function ScoreScreen({ results, user, saved, onRestart }) {
   const scored = results.filter((r) => r.firstAttempt !== "reflection");
   const correctCount = scored.filter((r) => r.firstAttempt === "correct").length;
   const partialCount = scored.filter((r) => r.firstAttempt === "partial").length;
@@ -451,6 +521,12 @@ function ScoreScreen({ results, onRestart }) {
 
   return (
     <div className="card score-card">
+      {user && (
+        <p className="score-user">
+          Results for <strong>{user.name}</strong>
+          {saved && <span className="saved-indicator"> · ✓ Saved</span>}
+        </p>
+      )}
       <div className={`score-badge ${badgeClass}`}>{badge}</div>
       <div className="score-circle">
         <span className="score-pct">{pct}%</span>
@@ -574,42 +650,54 @@ function ScoreScreen({ results, onRestart }) {
 }
 
 export default function App() {
-  const [screen, setScreen] = useState("welcome");
+  const [screen, setScreen] = useState("register");
+  const [user, setUser] = useState(null);
   const [current, setCurrent] = useState(0);
   const [results, setResults] = useState([]);
+  const [saved, setSaved] = useState(false);
 
   const q = questions[current];
 
-  const handleAnswer = ({ firstAttempt, tookRetry = false, reflectionScore = null }) => {
-    setResults((prev) => [
-      ...prev,
-      {
-        questionId: q.id,
-        section: q.section,
-        questionText: q.question,
-        correctAnswers: q.correct || null,
-        firstAttempt,
-        tookRetry,
-        reflectionScore,
-      },
-    ]);
+  const handleAnswer = ({
+    firstAttempt,
+    tookRetry = false,
+    reflectionScore = null,
+    reflectionText = null,
+  }) => {
+    const newResult = {
+      questionId: q.id,
+      section: q.section,
+      questionText: q.question,
+      correctAnswers: q.correct || null,
+      firstAttempt,
+      tookRetry,
+      reflectionScore,
+      reflectionText,
+    };
+    const newResults = [...results, newResult];
+    setResults(newResults);
+
     if (current + 1 < questions.length) {
       setCurrent(current + 1);
     } else {
       setScreen("score");
+      saveResults(user, newResults).then(() => setSaved(true));
     }
   };
 
   const restart = () => {
     setCurrent(0);
     setResults([]);
-    setScreen("welcome");
+    setSaved(false);
+    setScreen("register");
   };
 
+  if (screen === "register")
+    return <RegisterScreen onSubmit={(u) => { setUser(u); setScreen("welcome"); }} />;
   if (screen === "welcome")
     return <WelcomeScreen onStart={() => setScreen("quiz")} />;
   if (screen === "score")
-    return <ScoreScreen results={results} onRestart={restart} />;
+    return <ScoreScreen results={results} user={user} saved={saved} onRestart={restart} />;
 
   return (
     <div className="quiz-layout">
