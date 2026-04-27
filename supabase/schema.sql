@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS quiz_attempts (
   created_at    timestamptz DEFAULT now(),
   name          text        NOT NULL,
   email         text        NOT NULL,
+  company       text,
   score_pct     integer     NOT NULL,
   correct_count integer     NOT NULL,
   partial_count integer     NOT NULL,

@@ -53,6 +53,7 @@ async function saveResults(user, results) {
   const { error } = await supabase.from("quiz_attempts").insert({
     name: user.name,
     email: user.email,
+    company: user.company || null,
     score_pct: pct,
     correct_count: correctCount,
     partial_count: partialCount,
@@ -66,13 +67,14 @@ async function saveResults(user, results) {
 function RegisterScreen({ onSubmit }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) { setError("Please enter your name."); return; }
     if (!email.trim() || !email.includes("@")) { setError("Please enter a valid email address."); return; }
-    onSubmit({ name: name.trim(), email: email.trim() });
+    onSubmit({ name: name.trim(), email: email.trim(), company: company.trim() });
   };
 
   return (
@@ -96,6 +98,13 @@ function RegisterScreen({ onSubmit }) {
           placeholder="Your email address"
           value={email}
           onChange={(e) => { setEmail(e.target.value); setError(""); }}
+          className="register-input"
+        />
+        <input
+          type="text"
+          placeholder="Company name (optional)"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
           className="register-input"
         />
         {error && <p className="register-error">{error}</p>}
