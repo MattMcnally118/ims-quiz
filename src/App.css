@@ -462,3 +462,90 @@ body {
   line-height: 1.5;
   padding: 2px 0;
 }
+
+/* ── First attempt breakdown ── */
+.review-first-attempt {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.review-answer-right  { font-size: 0.88rem; color: #16a34a; font-weight: 500; line-height: 1.6; }
+.review-answer-wrong  { font-size: 0.88rem; color: #dc2626; font-weight: 500; line-height: 1.6; }
+.review-answer-missed { font-size: 0.88rem; color: #b45309; font-weight: 500; line-height: 1.6; }
+
+/* ── Retry hint ── */
+.retry-hint {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+/* ── Score actions ── */
+.score-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-print {
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  border: 2px solid #8BBFBD;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-print:hover { background: #d8eeec; }
+
+/* ── Print / PDF styles ── */
+@media print {
+  body { background: white !important; padding: 0 !important; }
+
+  #root { max-width: 100% !important; }
+
+  .score-actions,
+  .btn-print,
+  .btn-secondary,
+  .btn-skip-dev { display: none !important; }
+
+  .card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 20px !important;
+  }
+
+  .score-badge {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .score-circle {
+    border-color: #4E8B87 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .review-section-label {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .review-item { break-inside: avoid; }
+
+  .tag-missed, .tag-partial, .tag-retried, .tag-correct {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

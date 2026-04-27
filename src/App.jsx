@@ -174,6 +174,7 @@ function MultiSelectQuestion({ question, onSubmit }) {
   const [selected, setSelected] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [firstAttemptResult, setFirstAttemptResult] = useState(null);
+  const [firstAttemptSelections, setFirstAttemptSelections] = useState([]);
   const [retryCount, setRetryCount] = useState(0);
 
   const correct = question.correct;
@@ -188,7 +189,10 @@ function MultiSelectQuestion({ question, onSubmit }) {
   const handleSubmit = () => {
     if (selected.length === 0) return;
     const result = evaluate(selected);
-    if (!firstAttemptResult) setFirstAttemptResult(result);
+    if (!firstAttemptResult) {
+      setFirstAttemptResult(result);
+      setFirstAttemptSelections([...selected]);
+    }
     setSubmitted(true);
   };
 
@@ -201,9 +205,12 @@ function MultiSelectQuestion({ question, onSubmit }) {
   const handleNext = () => {
     onSubmit({
       firstAttempt: firstAttemptResult || evaluate(selected),
+      firstAttemptSelections,
       tookRetry: retryCount > 0,
     });
   };
+
+  const isRetrying = retryCount > 0 && !submitted;
 
   const toggle = (opt) => {
     if (submitted) return;
@@ -220,9 +227,16 @@ function MultiSelectQuestion({ question, onSubmit }) {
       ? question.feedback.partial
       : question.feedback.incorrect;
 
+  const retryHint = isRetrying
+    ? firstAttemptResult === "partial"
+      ? `You had ${correct.filter((c) => firstAttemptSelections.includes(c)).length} of ${correct.length} correct — the others are still out there 🔍`
+      : "None of those were right — take another look 🔍"
+    : null;
+
   return (
     <div>
       <p className="question-instruction">Select all that apply</p>
+      {retryHint && <p className="retry-hint">{retryHint}</p>}
       <div className="options-list">
         {shuffledOptions.map((opt) => {
           const isSelected = selected.includes(opt);
@@ -313,6 +327,7 @@ function SingleSelectQuestion({ question, onSubmit }) {
   const [selected, setSelected] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [firstAttemptResult, setFirstAttemptResult] = useState(null);
+  const [firstAttemptSelection, setFirstAttemptSelection] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
 
   const correct = question.correct[0];
@@ -320,7 +335,10 @@ function SingleSelectQuestion({ question, onSubmit }) {
   const handleSubmit = () => {
     if (!selected) return;
     const result = selected === correct ? "correct" : "incorrect";
-    if (!firstAttemptResult) setFirstAttemptResult(result);
+    if (!firstAttemptResult) {
+      setFirstAttemptResult(result);
+      setFirstAttemptSelection(selected);
+    }
     setSubmitted(true);
   };
 
@@ -334,15 +352,18 @@ function SingleSelectQuestion({ question, onSubmit }) {
     const result = selected === correct ? "correct" : "incorrect";
     onSubmit({
       firstAttempt: firstAttemptResult || result,
+      firstAttemptSelections: firstAttemptSelection ? [firstAttemptSelection] : [],
       tookRetry: retryCount > 0,
     });
   };
 
   const isCorrect = submitted && selected === correct;
+  const isRetrying = retryCount > 0 && !submitted;
 
   return (
     <div>
       <p className="question-instruction">Choose one answer</p>
+      {isRetrying && <p className="retry-hint">Not quite — give it another read 🔍</p>}
       <div className="options-list">
         {shuffledOptions.map((opt) => {
           const isSelected = selected === opt;
@@ -589,38 +610,45 @@ function ScoreScreen({ results, user, saved, onRestart }) {
               >
                 {section}
               </div>
-              {qs.map((r) => (
-                <div key={r.questionId} className="review-item">
-                  <div className="review-item-header">
-                    <span
-                      className={`review-result-tag ${
-                        r.firstAttempt === "partial"
-                          ? "tag-partial"
-                          : "tag-missed"
-                      }`}
-                    >
-                      {r.firstAttempt === "partial" ? "⚠ Partial" : "✗ Missed"}
-                    </span>
-                    {r.tookRetry && (
-                      <span className="tag-retried">↩ Corrected on retry</span>
+              {qs.map((r) => {
+                const sel = r.firstAttemptSelections || [];
+                const correct = r.correctAnswers || [];
+                const wrongPicks = sel.filter((s) => !correct.includes(s));
+                const missed = correct.filter((c) => !sel.includes(c));
+                const rightPicks = sel.filter((s) => correct.includes(s));
+                const isSingle = correct.length === 1 && sel.length <= 1;
+                return (
+                  <div key={r.questionId} className="review-item">
+                    <div className="review-item-header">
+                      <span className={`review-result-tag ${r.firstAttempt === "partial" ? "tag-partial" : "tag-missed"}`}>
+                        {r.firstAttempt === "partial" ? "⚠ Partial" : "✗ Missed"}
+                      </span>
+                      {r.tookRetry && <span className="tag-retried">✓ Corrected on retry</span>}
+                    </div>
+                    <p className="review-q-text">{r.questionText}</p>
+                    {sel.length > 0 && (
+                      <div className="review-first-attempt">
+                        <p className="review-answers-label">Your first answer{isSingle ? "" : "s"}:</p>
+                        {isSingle ? (
+                          <p className="review-answer-wrong">✗ {sel[0]}</p>
+                        ) : (
+                          <>
+                            {rightPicks.map((a) => <p key={a} className="review-answer-right">✓ {a}</p>)}
+                            {wrongPicks.map((a) => <p key={a} className="review-answer-wrong">✗ {a} (incorrect selection)</p>)}
+                            {missed.map((a) => <p key={a} className="review-answer-missed">○ {a} (missed)</p>)}
+                          </>
+                        )}
+                      </div>
+                    )}
+                    {correct.length > 0 && (
+                      <div className="review-answers">
+                        <p className="review-answers-label">Correct answer{correct.length > 1 ? "s" : ""}:</p>
+                        {correct.map((a) => <p key={a} className="review-answer-item">✓ {a}</p>)}
+                      </div>
                     )}
                   </div>
-                  <p className="review-q-text">{r.questionText}</p>
-                  {r.correctAnswers && r.correctAnswers.length > 0 && (
-                    <div className="review-answers">
-                      <p className="review-answers-label">
-                        Correct answer
-                        {r.correctAnswers.length > 1 ? "s" : ""}:
-                      </p>
-                      {r.correctAnswers.map((a) => (
-                        <p key={a} className="review-answer-item">
-                          ✓ {a}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           ))}
         </div>
@@ -654,9 +682,14 @@ function ScoreScreen({ results, user, saved, onRestart }) {
         </div>
       )}
 
-      <button className="btn-secondary" onClick={onRestart}>
-        Restart quiz
-      </button>
+      <div className="score-actions">
+        <button className="btn-print" onClick={() => window.print()}>
+          📄 Save as PDF
+        </button>
+        <button className="btn-secondary" onClick={onRestart}>
+          Restart quiz
+        </button>
+      </div>
     </div>
   );
 }
@@ -672,6 +705,7 @@ export default function App() {
 
   const handleAnswer = ({
     firstAttempt,
+    firstAttemptSelections = [],
     tookRetry = false,
     reflectionScore = null,
     reflectionText = null,
@@ -682,6 +716,7 @@ export default function App() {
       questionText: q.question,
       correctAnswers: q.correct || null,
       firstAttempt,
+      firstAttemptSelections,
       tookRetry,
       reflectionScore,
       reflectionText,
