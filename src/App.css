@@ -295,3 +295,115 @@ body {
   line-height: 1.6;
   margin-bottom: 28px;
 }
+
+/* ── Retry button ── */
+.action-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-retry {
+  display: inline-block;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-retry:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Score retried row ── */
+.score-retried { background: #eff6ff; color: #1e3a5f; }
+
+/* ── Review / breakdown section ── */
+.review-section {
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.review-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.review-section-group { margin-bottom: 20px; }
+
+.review-section-label {
+  display: inline-block;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.review-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.review-item-header {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.review-result-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.tag-missed { background: #fef2f2; color: #7f1d1d; }
+.tag-partial { background: #fffbeb; color: #78350f; }
+.tag-correct { background: #f0fdf4; color: #14532d; }
+.tag-retried {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: #eff6ff;
+  color: #1e3a5f;
+}
+
+.review-q-text {
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.review-answers { margin-top: 6px; }
+.review-answers-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.review-answer-item {
+  font-size: 0.88rem;
+  color: #16a34a;
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 2px 0;
+}

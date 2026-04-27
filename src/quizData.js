@@ -1,5 +1,5 @@
 export const questions = [
-  // ── INTRO ──────────────────────────────────────────────────────────────────
+  // ── IMS OVERVIEW ──────────────────────────────────────────────────────────
   {
     id: 1,
     section: "IMS Overview",
@@ -25,13 +25,13 @@ export const questions = [
       correct:
         "🔥 WOW — elite-level recall! The five IMS skills are Clarify & Confirm, Balanced Feedback, Discussion Skills, Manage a Difference, and Crediting. Each skill builds on the others to create genuinely effective communication.",
       partial:
-        "👏 Great start — you got some of them. The full set is: Clarify & Confirm, Balanced Feedback, Discussion Skills, Manage a Difference, and Crediting. Make sure all five are locked in before you head into your next conversation.",
+        "👏 Great start — you got some of them. The full set is: Clarify & Confirm, Balanced Feedback, Discussion Skills, Manage a Difference, and Crediting. Make sure all five are locked in before your next conversation.",
       incorrect:
-        "💡 Not quite. The five skills are: Clarify & Confirm, Balanced Feedback, Discussion Skills, Manage a Difference, and Crediting. These are the foundation of everything you practised over three days.",
+        "😅 Were you replying to emails during that session? The five IMS skills are: Clarify & Confirm, Balanced Feedback, Discussion Skills, Manage a Difference, and Crediting. These are the building blocks — worth memorising before your next difficult conversation.",
     },
   },
 
-  // ── CLARIFY & CONFIRM ──────────────────────────────────────────────────────
+  // ── CLARIFY & CONFIRM ─────────────────────────────────────────────────────
   {
     id: 2,
     section: "Clarify & Confirm",
@@ -51,9 +51,9 @@ export const questions = [
       correct:
         "🔥 Spot on! These two skills are universal AND incredibly powerful — 90% of misunderstandings can be avoided simply by clarifying and confirming. That stat alone should motivate daily practice.",
       partial:
-        "👏 You captured part of it. The two key reasons are: (1) these skills apply in virtually every conversation, and (2) they prevent 90% of misunderstandings. The impact is massive.",
+        "👏 You captured part of it. The two key reasons: (1) these skills apply in virtually every conversation, and (2) they prevent 90% of misunderstandings. The impact is massive.",
       incorrect:
-        "💡 The real reasons are that these skills are used constantly AND they prevent 90% of misunderstandings. Practise them and watch the quality of your conversations transform.",
+        "💡 Almost — but we need both reasons! They apply in virtually every conversation AND they prevent 90% of misunderstandings. Ninety. Percent. That's not a rounding error, that's a transformation.",
     },
   },
   {
@@ -73,7 +73,7 @@ export const questions = [
         "👏 Perfect. To clarify is to make clear, clear up, or shed light on something. It's about illuminating understanding — yours and theirs.",
       partial: "",
       incorrect:
-        "💡 Clarifying means to make clear, clear up, or shed light on. It's not about summarising (that's confirming) or challenging — it's about genuinely seeking to understand.",
+        "😅 'Clarify' means to make clear, shed light on, or clear something up — not summarise (that's confirming), not challenge. Think of it as turning on the lights in a conversation where everyone's fumbling in the dark.",
     },
   },
   {
@@ -101,7 +101,7 @@ export const questions = [
       partial:
         "👏 Good thinking — you got some of them. The four intents for clarifying are: (1) truly understand the other person's view, (2) make an informed decision, (3) motivate others, (4) take action on something.",
       incorrect:
-        "💡 The four reasons to clarify are: to truly understand, to make an informed decision, to motivate others, and to take action. Winning arguments or filling silence are not IMS intents.",
+        "💡 The four intents for clarifying: to truly understand, to make an informed decision, to motivate others, and to take action. 'Win arguments' and 'fill silence' didn't make the list — and that's very much the point.",
     },
   },
   {
@@ -109,22 +109,22 @@ export const questions = [
     section: "Clarify & Confirm",
     type: "single",
     question:
-      "What does RID stand for, and when do you need to clarify to overcome it?",
+      "You're in a conversation and your gut reaction is to Reject, Ignore, or Disagree with what the other person just said. In IMS, this impulse is called a 'RID moment'. What should you do?",
     options: [
-      "Reject, Ignore, Disagree — when your immediate impulse is to do any of these",
-      "React, Interrupt, Deflect — when emotions run high",
-      "Respond, Inform, Direct — when you need to lead the conversation",
-      "Rethink, Inquire, Decide — when you are unsure what to say",
+      "Pause and clarify — ask What and Why to understand their perspective first",
+      "State your disagreement calmly and clearly so the conversation stays on track",
+      "Take a moment to breathe, then respond once you've collected your thoughts",
+      "Acknowledge what they said before offering your own perspective",
     ],
     correct: [
-      "Reject, Ignore, Disagree — when your immediate impulse is to do any of these",
+      "Pause and clarify — ask What and Why to understand their perspective first",
     ],
     feedback: {
       correct:
-        "🔥 Yes! RID = Reject, Ignore, Disagree. When that impulse hits, that's exactly the moment to pause and clarify so you understand the other person's perspective first.",
+        "🔥 Exactly! The RID impulse is your signal to slow down and clarify — not react. Ask What and Why, understand their view first, and THEN decide how to respond. That pause is where great communication happens.",
       partial: "",
       incorrect:
-        "💡 RID stands for Reject, Ignore, Disagree. These are the impulses that get in the way of real listening. When you feel the urge to RID someone, that's your cue to clarify instead.",
+        "😂 Ah, the classic RID trap! Your gut says react — IMS says clarify. When you feel the urge to Reject, Ignore, or Disagree, that's your cue to ask What and Why questions first. Understand before you respond. Every time.",
     },
   },
   {
@@ -154,7 +154,7 @@ export const questions = [
       partial:
         "👏 Good recall! The five RID triggers are: time pressure, ego, assumptions, hierarchy bias, and tapes/bias/perceptions. Knowing your personal triggers helps you catch them in the moment.",
       incorrect:
-        "💡 The five things that cause a RID impulse are: time pressure, ego, assumptions, hierarchy bias, and tapes/bias/perceptions. These are deeply human — everyone has them. The skill is noticing them.",
+        "💡 Five RID triggers: time pressure, ego, assumptions, hierarchy bias, and tapes/bias/perceptions. (Lack of coffee is relatable but didn't make the official list.) Any of those ring a bell? They should — we all have them.",
     },
   },
   {
@@ -174,7 +174,7 @@ export const questions = [
         "👏 Correct! What and Why questions are open probes — they invite the other person to expand and share, giving you the information you need to truly understand.",
       partial: "",
       incorrect:
-        "💡 You clarify by asking What and Why questions. These open probes encourage the other person to share more deeply. Closed questions close doors; open questions open minds.",
+        "😅 You clarify by asking What and Why — open questions that invite the other person to expand. Closed questions get yes/no. Open questions get understanding. Simple formula, profound impact.",
     },
   },
   {
@@ -194,7 +194,7 @@ export const questions = [
         "🔥 Exactly right. Confirming is about validating your understanding — not agreeing. You state back a short summary of what you understood and check you got it right.",
       partial: "",
       incorrect:
-        "💡 To confirm means to validate or verify your understanding by stating back a short summary of what you heard. Importantly — confirming does NOT mean agreeing!",
+        "💡 To confirm means to validate your understanding by stating back a short summary of what you heard. Critical note: confirming is NOT agreeing. You can confirm perfectly and still think they're completely wrong.",
     },
   },
   {
@@ -214,7 +214,7 @@ export const questions = [
         "👏 Spot on! The test of a successful confirmation is the other person's 'yes' — their agreement that you got it right. Your internal confidence doesn't count here.",
       partial: "",
       incorrect:
-        "💡 You've successfully confirmed when the OTHER person says 'yes' — confirming that you understood them. It's their signal, not your feeling, that counts.",
+        "😂 Spoiler: your gut feeling that you understood doesn't count! The test is the other person's 'yes'. Their signal, not your confidence. If they say 'well, not quite...' — back to clarifying you go.",
     },
   },
   {
@@ -231,14 +231,14 @@ export const questions = [
     correct: ["No — confirming does NOT equal agreeing"],
     feedback: {
       correct:
-        "🔥 Critical distinction! Confirming = 'I understand what you're saying.' Agreeing = 'I accept your point.' You can fully understand someone and still hold a different view.",
+        "🔥 Critical distinction! Confirming = 'I understand what you're saying.' Agreeing = 'I accept your point.' You can fully understand someone and still hold a completely different view.",
       partial: "",
       incorrect:
-        "💡 Confirming does NOT equal agreeing. This is one of the most important distinctions in IMS. You can confirm someone's view perfectly — and then respectfully disagree with it.",
+        "💡 One of the most important IMS distinctions: confirming does NOT equal agreeing. You can confirm someone's position with perfect accuracy and then respectfully, calmly, totally disagree with it.",
     },
   },
 
-  // ── BALANCED FEEDBACK ──────────────────────────────────────────────────────
+  // ── BALANCED FEEDBACK ─────────────────────────────────────────────────────
   {
     id: 11,
     section: "Balanced Feedback",
@@ -258,11 +258,11 @@ export const questions = [
     ],
     feedback: {
       correct:
-        "🔥 Perfect! Balanced Feedback is specifically for constructive change — when behaviour, ideas or thinking need to shift. Emergencies and exceptional praise use different approaches.",
+        "🔥 Perfect! Balanced Feedback is specifically for constructive change — when behaviour, ideas or thinking need to shift. Emergencies and exceptional praise each have their own skills.",
       partial:
         "👏 You're on the right track. Balanced Feedback applies when you want to change behaviour, modify an idea, or improve performance — constructively. It's not for emergencies or pure praise.",
       incorrect:
-        "💡 Balanced Feedback is for constructive change: unsatisfactory behaviour you want improved willingly, non-feasible ideas you want refined, or thinking/behaviour/performance you want to shift positively.",
+        "😅 Balanced Feedback is for constructive change: unsatisfactory behaviour you want improved willingly, non-feasible ideas you want refined, or thinking/behaviour/performance you want to shift. Emergencies have their own lane. Exceptional praise? That's Crediting's territory.",
     },
   },
   {
@@ -282,15 +282,14 @@ export const questions = [
         "👏 Exactly. Intent drives everything in IMS. Your intent with Balanced Feedback is constructive change — helping them keep the good stuff and improve the rest.",
       partial: "",
       incorrect:
-        "💡 Your intent is to effect change constructively — so they keep doing what works and change what doesn't. It's not about pointing out wrongs; it's about unlocking better performance.",
+        "💡 Intent is everything. With Balanced Feedback, your intent is constructive change — they keep doing what works AND improve what doesn't. It's not about pointing out flaws; it's about unlocking better performance.",
     },
   },
   {
     id: 13,
     section: "Balanced Feedback",
     type: "multi-select",
-    question:
-      "What are the steps to giving Balanced Feedback? (Select all that apply)",
+    question: "What are the steps to giving Balanced Feedback? (Select all that apply)",
     options: [
       "Specify the merit (what they're doing well or what's strong about the idea)",
       "Specify the concern (the gap, weakness or problem)",
@@ -305,11 +304,11 @@ export const questions = [
     ],
     feedback: {
       correct:
-        "🔥 Nailed it! Merit → Concern → Explore how to retain the merit AND eliminate the concern. Remember: many people skip the 'retain the merit' part — don't be one of them!",
+        "🔥 Nailed it! Merit → Concern → Explore how to retain the merit AND eliminate the concern. Remember: many people forget that last bit has TWO parts — don't be a merit-forgetter!",
       partial:
-        "👏 Close! The three steps are: (1) State the merit, (2) State the concern, (3) Explore how to retain the merit AND eliminate the concern. Notice step 3 has TWO parts — both matter.",
+        "👏 Close! The three steps are: (1) State the merit, (2) State the concern, (3) Explore how to retain the merit AND eliminate the concern. Notice step 3 has TWO parts — both matter equally.",
       incorrect:
-        "💡 Balanced Feedback has three steps: State the merit → State the concern → Explore ideas to both retain the merit AND eliminate the concern. The apology and softening compliment are not part of the model.",
+        "😅 Three steps: Merit → Concern → Explore how to BOTH retain the merit AND eliminate the concern. Most people forget that last bit has two parts. The apology and softening compliment are not part of the model.",
     },
   },
   {
@@ -331,7 +330,7 @@ export const questions = [
         "🔥 Critical distinction mastered! 'You did a great job' = acknowledgement. 'The way you structured that argument made the risk completely clear' = merit. Specificity is what makes feedback land.",
       partial: "",
       incorrect:
-        "💡 Merits are SPECIFIC; acknowledgements are general. Feedback only works when it's specific — vague praise doesn't tell someone what to keep doing. Acknowledgements aren't bad, they just don't belong inside Balanced Feedback.",
+        "🔍 Merits are SPECIFIC. Acknowledgements are general. Feedback needs enough specificity that someone knows exactly what to repeat. 'Great work!' tells them nothing. 'The way you structured your argument made the risk crystal clear' tells them everything.",
     },
   },
   {
@@ -351,7 +350,7 @@ export const questions = [
         "👏 Exactly. An unrelated merit feels like a compliment sandwich — hollow and manipulative. A related merit makes the feedback coherent and impactful.",
       partial: "",
       incorrect:
-        "💡 The merit must be related to the concern to keep the feedback relevant and effective. If the merit and concern aren't connected, the feedback loses its integrity.",
+        "💡 A merit that doesn't relate to the concern feels like a compliment sandwich — and people see right through those immediately. Related merit = relevant, coherent feedback. Unrelated merit = suspicion.",
     },
   },
   {
@@ -359,22 +358,22 @@ export const questions = [
     section: "Balanced Feedback",
     type: "single",
     question:
-      "Should you use 'however' or 'but' to link the merit and the concern?",
+      "When linking the merit and concern in Balanced Feedback, what's the guidance on using 'however' or 'but'?",
     options: [
-      "No — 'however' and 'but' cancel out everything said before them",
-      "Yes — they clearly signal the transition to the concern",
-      "Only 'however' is acceptable; 'but' is too blunt",
-      "Either word is fine as long as your tone is warm",
+      "It's preferable to avoid them — they tend to cancel out the merit in the listener's mind",
+      "Either word works well — they clearly signal the transition to the concern",
+      "Only 'however' is acceptable; 'but' tends to feel too blunt",
+      "The word choice doesn't matter as long as your tone stays warm",
     ],
     correct: [
-      "No — 'however' and 'but' cancel out everything said before them",
+      "It's preferable to avoid them — they tend to cancel out the merit in the listener's mind",
     ],
     feedback: {
       correct:
-        "🔥 You know your stuff! 'You did great work BUT…' — the 'but' erases the merit. Avoid it. Use a neutral link or simply pause and move to the concern without a connecting word that negates.",
+        "🔥 Exactly right. 'You did great work BUT...' — and the merit quietly evaporates. It's a preference rather than a hard rule, but a well-founded one. Find a neutral transition instead.",
       partial: "",
       incorrect:
-        "💡 Do NOT use 'however' or 'but'. These words psychologically cancel everything before them. The merit disappears and all the person hears is the criticism. Find a different way to transition.",
+        "💡 The guidance is to avoid 'however' and 'but' where possible — they have a habit of cancelling out everything before them in the listener's mind. It's a preference, not a prohibition, but it makes a real difference.",
     },
   },
   {
@@ -400,9 +399,9 @@ export const questions = [
       correct:
         "👏 Perfect! Four clear exceptions: emergencies, safety, policy, and minor self-correcting errors. In all other cases, reach for Balanced Feedback.",
       partial:
-        "💡 Close — the four legitimate exceptions are: emergencies, safety situations, policy situations, and minor self-correcting errors. 'In a hurry' or personal dislike don't qualify.",
+        "💡 Close — the four legitimate exceptions are: emergencies, safety situations, policy situations, and minor self-correcting errors. 'In a hurry' is not on the list — sorry.",
       incorrect:
-        "💡 Direct feedback is only OK in four scenarios: emergencies, safety situations, policy situations, and minor self-correcting errors. These are the exceptions, not the norm.",
+        "😅 Four exceptions to Balanced Feedback: emergencies, safety situations, policy situations, and minor self-correcting errors. 'I'm in a hurry' is not on the list. Busyness is not a bypass — it's a habit that erodes trust over time.",
     },
   },
 
@@ -421,10 +420,10 @@ export const questions = [
     correct: ["Open the discussion → Explore ideas → Close the discussion"],
     feedback: {
       correct:
-        "🔥 Perfect sequence! Open → Explore → Close. Simple and powerful. Each step has its own skills and discipline.",
+        "🔥 Perfect sequence! Open → Explore → Close. Simple and powerful. Miss the close and you get brilliant conversations that produce zero accountability.",
       partial: "",
       incorrect:
-        "💡 The three steps are: Open the discussion, Explore ideas, Close the discussion. This structure keeps discussions productive rather than circular.",
+        "💡 Three steps: Open the discussion → Explore ideas → Close the discussion. This structure keeps discussions productive rather than circular — and that close step is the one most people skip.",
     },
   },
   {
@@ -444,9 +443,9 @@ export const questions = [
       correct:
         "🔥 Nailed it! Actions + Time frames + Ownership = accountable closure. Without all three, discussions produce good intentions but not results.",
       partial:
-        "👏 Good — but the three essentials are: actions agreed, time frames, and ownership. Make sure all three are explicit or the discussion will drift.",
+        "👏 Good — but the three essentials are: actions agreed, time frames, and ownership. Make sure all three are stated out loud or the next meeting starts exactly where this one ended.",
       incorrect:
-        "💡 A discussion close needs three things: actions agreed, time frames, and clear ownership. No follow-up email or motivational moment replaces these fundamentals.",
+        "😅 Closing a discussion without actions, time frames, and clear ownership is just... a really pleasant chat. All three have to be explicit. No follow-up email or motivational moment replaces them.",
     },
   },
   {
@@ -474,7 +473,7 @@ export const questions = [
       partial:
         "👏 Good effort — the four ways are: offer a suggestion & invite response, invite a suggestion & offer response, temporarily alter restrictions, and build on/acknowledge someone else's idea.",
       incorrect:
-        "💡 The four exploration moves are: (1) offer suggestion/invite response, (2) invite suggestion/offer response, (3) temporarily alter restrictions, (4) build on others' ideas with acknowledgement. Voting and deferring to hierarchy are not IMS tools.",
+        "💡 Four exploration moves: offer suggestion & invite response, invite suggestion & offer response, temporarily alter restrictions, and build on others' ideas with acknowledgement. Voting and 'let's ask the boss' shut exploration down — they're not IMS tools.",
     },
   },
   {
@@ -491,10 +490,10 @@ export const questions = [
     correct: ["When you have already made a decision"],
     feedback: {
       correct:
-        "👏 Exactly. Exploring ideas when the decision is already made is dishonest and wastes people's time. If it's decided, say so and move to Discussion Skills' close — or use a different skill.",
+        "👏 Exactly. Exploring ideas when the decision is already made is dishonest and wastes people's time. If it's decided, say so — use Discussion Skills' close and move on.",
       partial: "",
       incorrect:
-        "💡 You stop exploring ideas when the decision has already been made. Inviting input when the outcome is fixed is manipulative. Sensitive topics, disagreement, or time pressure don't automatically stop exploration.",
+        "😂 You stop exploring ideas when the decision has already been made. Asking for input when the outcome is fixed is manipulative — and people always know. If it's decided, own it. Sensitive topics, disagreement, or time pressure don't automatically stop exploration.",
     },
   },
 
@@ -522,7 +521,7 @@ export const questions = [
       partial:
         "👏 Close — the three signs are: (1) can't find a merit, (2) stuck in positions, (3) incompatible needs. Emotion and volume can be symptoms but aren't the diagnostic criteria.",
       incorrect:
-        "💡 The three signs a difference exists are: you can't find a merit, you're stuck in positions, and you have incompatible needs. Watch for these signals — they tell you which IMS skill to reach for.",
+        "💡 Three diagnostic signals: you can't find a merit, you're stuck in positions, or you have incompatible needs. When you see them, stop trying Balanced Feedback — you've crossed into Managing a Difference territory.",
     },
   },
   {
@@ -545,7 +544,7 @@ export const questions = [
         "👏 Correct! You never manage a difference you only assume you understand. Clarify and confirm first — then, once you're sure the difference is real, use Manage a Difference.",
       partial: "",
       incorrect:
-        "💡 Always clarify and confirm before managing a difference. You need to be sure the difference is real and that you understand both sides clearly. Acting on assumptions is a recipe for escalation.",
+        "😅 Always clarify and confirm before managing a difference. Managing a difference you only assume you understand is where really long, really circular arguments come from. Confirm the reality of the gap first.",
     },
   },
   {
@@ -571,7 +570,7 @@ export const questions = [
       partial:
         "👏 Good — the three moves are: state what's important to you and why, state what's important to them and why, and invite suggestions to bridge the gap.",
       incorrect:
-        "💡 Managing a difference means: (1) state what matters to you and why, (2) state what matters to them and why, (3) invite suggestions to bridge the gap. Insisting or escalating are last resorts, not the model.",
+        "💡 Three moves: state what matters to you and why, state what matters to them and why, invite suggestions to bridge the gap. Insisting on your position isn't managing a difference — it IS the difference.",
     },
   },
   {
@@ -600,7 +599,7 @@ export const questions = [
       partial:
         "👏 Good thinking. The key moves when you can no longer find resolution: terminate respectfully, acknowledge the difference, state your decision and why, and accept that you may agree to disagree.",
       incorrect:
-        "💡 When resolution isn't possible: terminate with respect, acknowledge their right to their view, state clearly what your decision is and why, and accept that agreeing to disagree is sometimes the outcome. Giving in or getting angry both erode the relationship.",
+        "😅 When you're out of road: terminate respectfully, acknowledge their right to their view, state your decision clearly, and accept that agreeing to disagree is sometimes the honest outcome. Giving in to keep the peace? That's not resolution — that's a debt that comes due later.",
     },
   },
 
@@ -624,11 +623,11 @@ export const questions = [
     ],
     feedback: {
       correct:
-        "🔥 Exactly right! Credits are earned — for exceeding, consistently meeting, or improving in a struggle area. Giving them too freely (every day as a habit) diminishes their impact.",
+        "🔥 Exactly right! Credits are earned — for exceeding, consistently meeting, or improving in a struggle area. Using them daily as a habit or to win favour? That's flattery — and people know the difference.",
       partial:
         "👏 Close — credits apply when someone: exceeds expectations, consistently meets expectations, or improves where they normally struggle. Over-crediting or using it for personal gain undermines the skill.",
       incorrect:
-        "💡 Credits are earned in three situations: exceeding expectations, consistently meeting expectations, or improving where they normally struggle. They lose power when given too frequently or insincerely.",
+        "💡 Credits are earned in three situations: exceeding expectations, consistently meeting expectations, or improving where they normally struggle. Giving credits on a daily schedule or to get someone to like you? That's flattery — and people know the difference.",
     },
   },
   {
@@ -652,9 +651,9 @@ export const questions = [
       correct:
         "🔥 All three components nailed! What they did + What it took + What it meant = a credit with real substance and lasting impact.",
       partial:
-        "👏 You got some — the three essentials are: what they did, what it took, and what it meant. The other options (future encouragement, comparisons) can actually dilute the credit.",
+        "👏 You got some — the three essentials are: what they did, what it took, and what it meant. Future encouragement and comparisons can actually dilute the credit.",
       incorrect:
-        "💡 A powerful credit has three parts: what they did (specific behaviour), what it took (the effort or skill it required), and what it meant (the impact it had). All three give it substance and sincerity.",
+        "😅 A credit needs all three: what they did (specific), what it took (effort or skill), and what it meant (the impact). Missing any one turns a credit into a general comment — and general comments don't change behaviour.",
     },
   },
   {
@@ -678,11 +677,11 @@ export const questions = [
     ],
     feedback: {
       correct:
-        "🔥 Spot on — all four derailers identified! Incomplete, insincere, too frequent, or unearned credits all backfire. Each one undermines the trust and impact of the skill.",
+        "🔥 Spot on — all four derailers identified! Incomplete, insincere, too frequent, or unearned credits all backfire. Each one quietly erodes the power of the skill.",
       partial:
         "👏 Good — the four things that detract are: incomplete credit, insincerity, over-frequency, and giving it when it hasn't been earned. Delivery method (in person vs. written) isn't a derailer.",
       incorrect:
-        "💡 Four things can weaken a credit: it's incomplete, it's not sincere, it's given too often, or it hasn't been earned. Protect the power of this skill by using it carefully.",
+        "💡 Four credit-killers: incomplete, insincere, too frequent, or unearned. Credits work because they're rare and true — protect that by being selective. Overuse them and watch people start tuning you out.",
     },
   },
 
@@ -719,7 +718,7 @@ export const questions = [
       partial:
         "👏 Great effort! The seven essentials are: use it consciously, be clear on intent, keep it simple, practise and reflect daily, celebrate wins, ask for feedback, and share/credit others. Every one matters.",
       incorrect:
-        "💡 The seven essentials for IMS mastery: use it consciously, be clear on your intent, keep it simple, practise and reflect daily, celebrate wins when it works, ask for feedback, and share the skills with others. Waiting until you're 'ready' means never starting.",
+        "😅 Seven essentials — and 'wait until you feel ready' didn't make the cut! Ready is a myth. The formula: conscious use, clear intent, keep it simple, practise daily, celebrate wins, ask for feedback, and share it with others. Start now.",
     },
   },
 
@@ -729,8 +728,15 @@ export const questions = [
     section: "Reflection",
     type: "reflection",
     question: "What are the 3 most impactful things you have learnt from attending IMS?",
+    keywords: ["clarif", "confirm", "feedback", "discussion", "differ", "credit", "rid", "merit", "concern", "listen", "intent", "skill", "communic"],
+    reflectionFeedback: {
+      too_short: "💡 You've made a start — but a strong reflection takes more than a sentence. What specifically changed for you? Which skills? Which relationships?",
+      weak: "😅 Good effort — but try to name the specific skills or insights that stood out. The more concrete you are, the more useful this reflection becomes for your own growth.",
+      medium: "👏 Good thinking — you're making real connections. To go deeper: can you name all three things specifically and explain why each one matters to you personally?",
+      strong: "🔥 Excellent reflection! You're clearly thinking with IMS, not just about it. That depth of awareness is exactly what turns training into habit.",
+    },
     modelAnswer:
-      "There's no single right answer here — but the most powerful reflections tend to connect a specific skill to a real relationship or situation in your life. The best leaders identify: (1) a skill that will change how they handle conflict, (2) something that shifts how they listen, and (3) an insight about their own tendencies (like RID triggers or over-using acknowledgements instead of merits). What's yours?",
+      "The most powerful reflections connect a specific skill to a real relationship or situation. Strong leaders identify: (1) a skill that changes how they handle conflict, (2) something that shifts how they listen, and (3) an insight about their own tendencies (like their personal RID triggers, or over-using acknowledgements instead of merits).",
   },
   {
     id: 31,
@@ -738,8 +744,15 @@ export const questions = [
     type: "reflection",
     question:
       "Which skill do you think will have the biggest impact on your leadership if you master it?",
+    keywords: ["clarif", "confirm", "feedback", "discussion", "differ", "credit", "rid", "because", "impact", "improve", "skill", "when", "my"],
+    reflectionFeedback: {
+      too_short: "💡 Just a word or two isn't quite enough here — which skill, and more importantly, why? That 'why' is where the real insight lives.",
+      weak: "😅 A strong answer names the specific skill AND explains why it will move the needle for you. What is it about that skill that connects to your real conversations or relationships?",
+      medium: "👏 Good — you named the skill. Now push one step further: why this one? What does mastering it unlock for you specifically?",
+      strong: "🔥 That's the kind of reflection that sticks. You know which skill will change things for you — now go use it deliberately in your next three conversations.",
+    },
     modelAnswer:
-      "The skill that will move the needle most is usually the one you use least naturally. For many leaders it's Balanced Feedback (because most either avoid it or give it without the merit-retention step). For others it's Crediting (because they assume people know they're doing well). Reflect honestly — and then go practise that skill in your next three conversations.",
+      "The skill that will move the needle most is usually the one you use least naturally. For many leaders it's Balanced Feedback (most either avoid it or give it without the merit-retention step). For others it's Crediting (assuming people already know they're doing well). Reflect honestly — then practise that skill in your next three real conversations.",
   },
   {
     id: 32,
@@ -747,8 +760,15 @@ export const questions = [
     type: "reflection",
     question:
       "Give an example of when you used an IMS skill after the training. Describe the situation, how you used the skill, how you felt, and what the impact was.",
+    keywords: ["conversation", "situation", "said", "used", "applied", "felt", "impact", "result", "team", "colleague", "manager", "person", "skill", "clarif", "feedback", "credit", "different"],
+    reflectionFeedback: {
+      too_short: "💡 A great IMS example needs more space than that! Situation + skill used + how you applied it + impact. Try to flesh it out.",
+      weak: "😅 You've touched on it — but the most useful examples are specific: what was the situation, which skill, what exactly you said or did, and what changed as a result.",
+      medium: "👏 Good start — you've described a real situation. To make it even stronger, describe exactly how you applied the IMS steps and what the other person's response was.",
+      strong: "🔥 That's a great example! Specific situation, clear skill application, real impact — this is exactly how mastery gets built: one real conversation at a time.",
+    },
     modelAnswer:
-      "A strong example includes: the specific skill used, the context (what was at stake), how you applied the steps, what was different about the outcome compared to how it might have gone before, and — crucially — how the other person responded. If you haven't had the chance yet, describe a situation coming up where you plan to use one of the skills.",
+      "A strong example includes: the specific skill used, the context (what was at stake), how you applied the steps, what was different about the outcome compared to how it might have gone before, and how the other person responded. If you haven't had the chance yet, describe a situation coming up where you plan to use one of the skills.",
   },
   {
     id: 33,
@@ -756,7 +776,14 @@ export const questions = [
     type: "reflection",
     question:
       "We would value your balanced feedback on how effective you think this quiz is.",
+    keywords: ["merit", "concern", "good", "work", "effective", "helpful", "could", "improve", "suggest", "better", "missing", "change", "strong", "weak"],
+    reflectionFeedback: {
+      too_short: "💡 That's the beginning of a thought — but Balanced Feedback needs more space. Try again: what's working (merit), what's the concern, and how would you improve it?",
+      weak: "😅 Interesting — but did you notice that a Balanced Feedback response has three parts? A merit (what works), a concern (what could improve), and ideas for how to retain the merit while addressing the concern. Try applying the model to your own answer!",
+      medium: "👏 You're getting there — you've identified something that works or something to improve. A complete Balanced Feedback has both a specific merit AND a specific concern, plus ideas for how to address the concern without losing the merit.",
+      strong: "🔥 You actually used Balanced Feedback to give feedback on the Balanced Feedback quiz. That's either very meta or very mastered — we're going with mastered.",
+    },
     modelAnswer:
-      "A great balanced feedback response would include: a specific merit (what works well about the quiz and why), a specific concern (what could be improved and the impact of that gap), and ideas for how to retain the merit while addressing the concern. Notice — you're practising the very skill you just learned!",
+      "A great Balanced Feedback response includes: a specific merit (what works well about the quiz and why), a specific concern (what could be improved and the impact of that gap), and ideas for how to retain the merit while addressing the concern. Notice — you just practised the very skill you learned!",
   },
 ];

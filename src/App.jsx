@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { questions } from "./quizData";
 import "./App.css";
 
@@ -16,6 +16,26 @@ function getSectionColor(section) {
     Reflection: "#888",
   };
   return map[section] || "#4E8B87";
+}
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function scoreReflection(text, keywords) {
+  if (!keywords?.length) return null;
+  const lower = text.toLowerCase();
+  const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+  if (wordCount < 15) return "too_short";
+  const matches = keywords.filter((kw) => lower.includes(kw)).length;
+  if (matches >= 3) return "strong";
+  if (matches >= 1) return "medium";
+  return "weak";
 }
 
 function ProgressBar({ current, total }) {
@@ -65,8 +85,44 @@ function WelcomeScreen({ onStart }) {
 }
 
 function MultiSelectQuestion({ question, onSubmit }) {
+  const shuffledOptions = useMemo(
+    () => shuffleArray(question.options),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [question.id]
+  );
   const [selected, setSelected] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [firstAttemptResult, setFirstAttemptResult] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
+
+  const correct = question.correct;
+
+  const evaluate = (sel) => {
+    const allCorrect =
+      sel.length === correct.length && sel.every((s) => correct.includes(s));
+    const someCorrect = !allCorrect && sel.some((s) => correct.includes(s));
+    return allCorrect ? "correct" : someCorrect ? "partial" : "incorrect";
+  };
+
+  const handleSubmit = () => {
+    if (selected.length === 0) return;
+    const result = evaluate(selected);
+    if (!firstAttemptResult) setFirstAttemptResult(result);
+    setSubmitted(true);
+  };
+
+  const handleRetry = () => {
+    setSelected([]);
+    setSubmitted(false);
+    setRetryCount((r) => r + 1);
+  };
+
+  const handleNext = () => {
+    onSubmit({
+      firstAttempt: firstAttemptResult || evaluate(selected),
+      tookRetry: retryCount > 0,
+    });
+  };
 
   const toggle = (opt) => {
     if (submitted) return;
@@ -75,36 +131,25 @@ function MultiSelectQuestion({ question, onSubmit }) {
     );
   };
 
-  const handleSubmit = () => {
-    if (selected.length === 0) return;
-    setSubmitted(true);
-  };
-
-  const correct = question.correct;
-  const allCorrect =
-    submitted &&
-    selected.length === correct.length &&
-    selected.every((s) => correct.includes(s));
-  const someCorrect =
-    submitted && !allCorrect && selected.some((s) => correct.includes(s));
-
-  const feedbackText = allCorrect
-    ? question.feedback.correct
-    : someCorrect
-    ? question.feedback.partial
-    : question.feedback.incorrect;
+  const currentResult = submitted ? evaluate(selected) : null;
+  const feedbackText =
+    currentResult === "correct"
+      ? question.feedback.correct
+      : currentResult === "partial"
+      ? question.feedback.partial
+      : question.feedback.incorrect;
 
   return (
     <div>
       <p className="question-instruction">Select all that apply</p>
       <div className="options-list">
-        {question.options.map((opt) => {
+        {shuffledOptions.map((opt) => {
           const isSelected = selected.includes(opt);
           const isCorrect = correct.includes(opt);
           let cls = "option";
           if (submitted) {
             if (isCorrect) cls += " option-correct";
-            else if (isSelected && !isCorrect) cls += " option-wrong";
+            else if (isSelected) cls += " option-wrong";
           } else if (isSelected) {
             cls += " option-selected";
           }
@@ -139,12 +184,39 @@ function MultiSelectQuestion({ question, onSubmit }) {
 
       {submitted && (
         <>
-          <div className={`feedback-box ${allCorrect ? "feedback-great" : someCorrect ? "feedback-partial" : "feedback-miss"}`}>
+          <div
+            className={`feedback-box ${
+              currentResult === "correct"
+                ? "feedback-great"
+                : currentResult === "partial"
+                ? "feedback-partial"
+                : "feedback-miss"
+            }`}
+          >
             <p>{feedbackText}</p>
           </div>
-          <button className="btn-primary" onClick={() => onSubmit(allCorrect ? "correct" : someCorrect ? "partial" : "incorrect")}>
-            Next question →
-          </button>
+          <div className="action-row">
+            {currentResult === "correct" && (
+              <button className="btn-primary" onClick={handleNext}>
+                Next question →
+              </button>
+            )}
+            {currentResult === "partial" && (
+              <>
+                <button className="btn-retry" onClick={handleRetry}>
+                  ↩ Try again
+                </button>
+                <button className="btn-primary" onClick={handleNext}>
+                  Next question →
+                </button>
+              </>
+            )}
+            {currentResult === "incorrect" && (
+              <button className="btn-retry" onClick={handleRetry}>
+                ↩ Try again
+              </button>
+            )}
+          </div>
         </>
       )}
     </div>
@@ -152,22 +224,46 @@ function MultiSelectQuestion({ question, onSubmit }) {
 }
 
 function SingleSelectQuestion({ question, onSubmit }) {
+  const shuffledOptions = useMemo(
+    () => shuffleArray(question.options),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [question.id]
+  );
   const [selected, setSelected] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [firstAttemptResult, setFirstAttemptResult] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
+
+  const correct = question.correct[0];
 
   const handleSubmit = () => {
     if (!selected) return;
+    const result = selected === correct ? "correct" : "incorrect";
+    if (!firstAttemptResult) setFirstAttemptResult(result);
     setSubmitted(true);
   };
 
-  const correct = question.correct[0];
+  const handleRetry = () => {
+    setSelected(null);
+    setSubmitted(false);
+    setRetryCount((r) => r + 1);
+  };
+
+  const handleNext = () => {
+    const result = selected === correct ? "correct" : "incorrect";
+    onSubmit({
+      firstAttempt: firstAttemptResult || result,
+      tookRetry: retryCount > 0,
+    });
+  };
+
   const isCorrect = submitted && selected === correct;
 
   return (
     <div>
       <p className="question-instruction">Choose one answer</p>
       <div className="options-list">
-        {question.options.map((opt) => {
+        {shuffledOptions.map((opt) => {
           const isSelected = selected === opt;
           const isRight = correct === opt;
           let cls = "option";
@@ -212,12 +308,28 @@ function SingleSelectQuestion({ question, onSubmit }) {
 
       {submitted && (
         <>
-          <div className={`feedback-box ${isCorrect ? "feedback-great" : "feedback-miss"}`}>
-            <p>{isCorrect ? question.feedback.correct : question.feedback.incorrect}</p>
+          <div
+            className={`feedback-box ${
+              isCorrect ? "feedback-great" : "feedback-miss"
+            }`}
+          >
+            <p>
+              {isCorrect
+                ? question.feedback.correct
+                : question.feedback.incorrect}
+            </p>
           </div>
-          <button className="btn-primary" onClick={() => onSubmit(isCorrect ? "correct" : "incorrect")}>
-            Next question →
-          </button>
+          <div className="action-row">
+            {isCorrect ? (
+              <button className="btn-primary" onClick={handleNext}>
+                Next question →
+              </button>
+            ) : (
+              <button className="btn-retry" onClick={handleRetry}>
+                ↩ Try again
+              </button>
+            )}
+          </div>
         </>
       )}
     </div>
@@ -227,11 +339,26 @@ function SingleSelectQuestion({ question, onSubmit }) {
 function ReflectionQuestion({ question, onSubmit }) {
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState(null);
 
   const handleSubmit = () => {
     if (text.trim().length < 10) return;
+    const s = scoreReflection(text, question.keywords);
+    setScore(s);
     setSubmitted(true);
   };
+
+  const scoreFeedback =
+    score && question.reflectionFeedback
+      ? question.reflectionFeedback[score]
+      : null;
+
+  const scoreFeedbackClass =
+    score === "strong"
+      ? "feedback-great"
+      : score === "medium"
+      ? "feedback-partial"
+      : "feedback-miss";
 
   return (
     <div>
@@ -257,11 +384,25 @@ function ReflectionQuestion({ question, onSubmit }) {
 
       {submitted && (
         <>
+          {scoreFeedback && (
+            <div className={`feedback-box ${scoreFeedbackClass}`}>
+              <p>{scoreFeedback}</p>
+            </div>
+          )}
           <div className="feedback-box feedback-reflection">
             <p className="feedback-label">💡 Coaching perspective</p>
             <p>{question.modelAnswer}</p>
           </div>
-          <button className="btn-primary" onClick={() => onSubmit("reflection")}>
+          <button
+            className="btn-primary"
+            onClick={() =>
+              onSubmit({
+                firstAttempt: "reflection",
+                tookRetry: false,
+                reflectionScore: score,
+              })
+            }
+          >
             Next question →
           </button>
         </>
@@ -271,17 +412,42 @@ function ReflectionQuestion({ question, onSubmit }) {
 }
 
 function ScoreScreen({ results, onRestart }) {
-  const scored = results.filter((r) => r !== "reflection");
-  const correct = scored.filter((r) => r === "correct").length;
-  const partial = scored.filter((r) => r === "partial").length;
-  const incorrect = scored.filter((r) => r === "incorrect").length;
-  const pct = scored.length > 0 ? Math.round(((correct + partial * 0.5) / scored.length) * 100) : 0;
+  const scored = results.filter((r) => r.firstAttempt !== "reflection");
+  const correctCount = scored.filter((r) => r.firstAttempt === "correct").length;
+  const partialCount = scored.filter((r) => r.firstAttempt === "partial").length;
+  const incorrectCount = scored.filter((r) => r.firstAttempt === "incorrect").length;
+  const retriedCount = scored.filter((r) => r.tookRetry).length;
+  const reflections = results.filter((r) => r.firstAttempt === "reflection");
+
+  const pct =
+    scored.length > 0
+      ? Math.round(((correctCount + partialCount * 0.5) / scored.length) * 100)
+      : 0;
 
   let badge, badgeClass;
-  if (pct >= 90) { badge = "🔥 IMS Master"; badgeClass = "badge-gold"; }
-  else if (pct >= 70) { badge = "👏 Strong Practitioner"; badgeClass = "badge-silver"; }
-  else if (pct >= 50) { badge = "💡 Growing Leader"; badgeClass = "badge-bronze"; }
-  else { badge = "😅 Keep Practising"; badgeClass = "badge-keep-going"; }
+  if (pct >= 90) {
+    badge = "🔥 IMS Master";
+    badgeClass = "badge-gold";
+  } else if (pct >= 70) {
+    badge = "👏 Strong Practitioner";
+    badgeClass = "badge-silver";
+  } else if (pct >= 50) {
+    badge = "💡 Growing Leader";
+    badgeClass = "badge-bronze";
+  } else {
+    badge = "😅 Keep Practising";
+    badgeClass = "badge-keep-going";
+  }
+
+  const needsReview = results.filter(
+    (r) => r.firstAttempt !== "correct" && r.firstAttempt !== "reflection"
+  );
+
+  const bySection = needsReview.reduce((acc, r) => {
+    if (!acc[r.section]) acc[r.section] = [];
+    acc[r.section].push(r);
+    return acc;
+  }, {});
 
   return (
     <div className="card score-card">
@@ -290,27 +456,116 @@ function ScoreScreen({ results, onRestart }) {
         <span className="score-pct">{pct}%</span>
         <span className="score-label">mastery score</span>
       </div>
+
       <div className="score-breakdown">
         <div className="score-row score-correct">
-          <span>✓ Correct</span><span>{correct}</span>
+          <span>✓ Correct first attempt</span>
+          <span>{correctCount}</span>
         </div>
         <div className="score-row score-partial">
-          <span>~ Partial</span><span>{partial}</span>
+          <span>~ Partial</span>
+          <span>{partialCount}</span>
         </div>
         <div className="score-row score-incorrect">
-          <span>✗ Missed</span><span>{incorrect}</span>
+          <span>✗ Missed</span>
+          <span>{incorrectCount}</span>
         </div>
+        {retriedCount > 0 && (
+          <div className="score-row score-retried">
+            <span>↩ Corrected on retry</span>
+            <span>{retriedCount}</span>
+          </div>
+        )}
         <div className="score-row score-reflection">
-          <span>💭 Reflections</span><span>{results.filter((r) => r === "reflection").length}</span>
+          <span>💭 Reflections completed</span>
+          <span>{reflections.length}</span>
         </div>
       </div>
+
       <p className="score-message">
         {pct >= 90
           ? "Exceptional! Now go use IMS in your next real conversation."
           : pct >= 70
-          ? "Solid foundation. Review your missed answers and practise daily."
-          : "This is exactly where mastery begins. Review the sections you struggled with and come back."}
+          ? "Solid foundation. Review the questions below and practise daily."
+          : "This is exactly where mastery begins. Review the sections below and come back."}
       </p>
+
+      {needsReview.length > 0 && (
+        <div className="review-section">
+          <h3 className="review-heading">Questions to review</h3>
+          {Object.entries(bySection).map(([section, qs]) => (
+            <div key={section} className="review-section-group">
+              <div
+                className="review-section-label"
+                style={{ background: getSectionColor(section) }}
+              >
+                {section}
+              </div>
+              {qs.map((r) => (
+                <div key={r.questionId} className="review-item">
+                  <div className="review-item-header">
+                    <span
+                      className={`review-result-tag ${
+                        r.firstAttempt === "partial"
+                          ? "tag-partial"
+                          : "tag-missed"
+                      }`}
+                    >
+                      {r.firstAttempt === "partial" ? "⚠ Partial" : "✗ Missed"}
+                    </span>
+                    {r.tookRetry && (
+                      <span className="tag-retried">↩ Corrected on retry</span>
+                    )}
+                  </div>
+                  <p className="review-q-text">{r.questionText}</p>
+                  {r.correctAnswers && r.correctAnswers.length > 0 && (
+                    <div className="review-answers">
+                      <p className="review-answers-label">
+                        Correct answer
+                        {r.correctAnswers.length > 1 ? "s" : ""}:
+                      </p>
+                      {r.correctAnswers.map((a) => (
+                        <p key={a} className="review-answer-item">
+                          ✓ {a}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {reflections.length > 0 && (
+        <div className="review-section">
+          <h3 className="review-heading">Reflection quality</h3>
+          {reflections.map((r) => (
+            <div key={r.questionId} className="review-item">
+              <span
+                className={`review-result-tag ${
+                  r.reflectionScore === "strong"
+                    ? "tag-correct"
+                    : r.reflectionScore === "medium"
+                    ? "tag-partial"
+                    : "tag-missed"
+                }`}
+              >
+                {r.reflectionScore === "strong"
+                  ? "🔥 Strong"
+                  : r.reflectionScore === "medium"
+                  ? "👏 Good start"
+                  : r.reflectionScore === "too_short"
+                  ? "💡 Too brief"
+                  : "💡 Needs depth"}
+              </span>
+              <p className="review-q-text">{r.questionText}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       <button className="btn-secondary" onClick={onRestart}>
         Restart quiz
       </button>
@@ -325,9 +580,19 @@ export default function App() {
 
   const q = questions[current];
 
-  const handleAnswer = (result) => {
-    const newResults = [...results, result];
-    setResults(newResults);
+  const handleAnswer = ({ firstAttempt, tookRetry = false, reflectionScore = null }) => {
+    setResults((prev) => [
+      ...prev,
+      {
+        questionId: q.id,
+        section: q.section,
+        questionText: q.question,
+        correctAnswers: q.correct || null,
+        firstAttempt,
+        tookRetry,
+        reflectionScore,
+      },
+    ]);
     if (current + 1 < questions.length) {
       setCurrent(current + 1);
     } else {
@@ -341,8 +606,10 @@ export default function App() {
     setScreen("welcome");
   };
 
-  if (screen === "welcome") return <WelcomeScreen onStart={() => setScreen("quiz")} />;
-  if (screen === "score") return <ScoreScreen results={results} onRestart={restart} />;
+  if (screen === "welcome")
+    return <WelcomeScreen onStart={() => setScreen("quiz")} />;
+  if (screen === "score")
+    return <ScoreScreen results={results} onRestart={restart} />;
 
   return (
     <div className="quiz-layout">
