@@ -158,9 +158,6 @@ function WelcomeScreen({ onStart, onSkip }) {
       <button className="btn-primary" onClick={onStart}>
         Let's go →
       </button>
-      <button className="btn-skip-dev" onClick={onSkip}>
-        [TEST] Skip to score →
-      </button>
     </div>
   );
 }
